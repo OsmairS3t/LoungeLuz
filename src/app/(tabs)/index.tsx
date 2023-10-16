@@ -1,9 +1,13 @@
-import { View, Text } from 'react-native'
+import { Platform, View, Text, SafeAreaView, Button } from 'react-native'
+import { useState } from 'react';
 
 export default function Home() {
+
     return (
-        <View>
-            <Text>hOME</Text>
-        </View>
+        <SafeAreaView>
+            <View>
+                <Text>Home</Text>
+            </View>
+        </SafeAreaView>
     )
 }
