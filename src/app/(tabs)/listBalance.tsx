@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native'
 import { ImageBackground, SafeAreaView } from 'react-native'
+import { styles } from '../../styles'
 
 export default function ListBalance() {
     return (

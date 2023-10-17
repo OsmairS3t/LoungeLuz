@@ -1,6 +1,6 @@
-import { Tabs, Link } from "expo-router";
-import { MaterialIcons } from '@expo/vector-icons'
+import { Tabs } from "expo-router";
 import { Image } from "expo-image";
+import { Barcode, ListChecks, House } from 'phosphor-react-native'
 
 export default function TabRoutesLayout() {
     return (
@@ -19,7 +19,7 @@ export default function TabRoutesLayout() {
                         source={require('../../../assets/footer.png')}
                         style={{
                             marginTop: 30,
-                            width: 415,
+                            width: '100%',
                             height: 100
                         }}
                     />
@@ -28,7 +28,7 @@ export default function TabRoutesLayout() {
                     fontSize: 12,
                     fontWeight: "bold",
                     marginBottom: 10,
-                },
+                }
             }}
         >
             <Tabs.Screen
@@ -43,7 +43,7 @@ export default function TabRoutesLayout() {
                         height: 100,
                     },
                     tabBarIcon: ({ size, color }) =>
-                        <MaterialIcons name='portrait' size={size} color={color} />
+                        <Barcode size={36} color={color} />
                 }}
             />
             <Tabs.Screen
@@ -58,7 +58,7 @@ export default function TabRoutesLayout() {
                         backgroundColor: '#005',
                     },
                     tabBarIcon: ({ size, color }) =>
-                        <MaterialIcons name='home' size={size} color={color} />
+                        <House size={size} color={color} />
                 }}
             />
             <Tabs.Screen
@@ -69,7 +69,7 @@ export default function TabRoutesLayout() {
                         paddingTop: 60,
                     },
                     tabBarIcon: ({ size, color }) =>
-                        <MaterialIcons name='menu' size={size} color={color} />
+                        <ListChecks size={36} color={color} />
                 }}
             />
         </Tabs>
