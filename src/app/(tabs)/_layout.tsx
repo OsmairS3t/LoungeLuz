@@ -1,5 +1,6 @@
 import { Tabs, Link } from "expo-router";
 import { MaterialIcons } from '@expo/vector-icons'
+import { Image } from "expo-image"; 
 
 export default function TabRoutesLayout() {
     return (
@@ -8,13 +9,19 @@ export default function TabRoutesLayout() {
                 headerShown: false,
                 tabBarActiveTintColor: '#fff',
                 tabBarStyle: {
-                    height: 100,
-                    borderWidth: 1,
-                    borderRadius: 0,
-                    borderColor: '#050',
-                    borderTopColor: '#055',
-                    backgroundColor: '#005',
+                    height: 130,
+                    backgroundColor: '#e9e9ff',
                 },
+                tabBarBackground: ()=>(
+                    <Image 
+                        source={require('../../../assets/footer.png')} 
+                        style={{
+                            marginTop: 30, 
+                            width: 415, 
+                            height: 100
+                        }} 
+                    />
+                ),
                 tabBarLabelStyle: {
                     fontSize: 12,
                     fontWeight: "bold",
@@ -25,8 +32,14 @@ export default function TabRoutesLayout() {
             <Tabs.Screen
                 name="products"
                 options={{
-
                     title: "Produtos",
+                    tabBarItemStyle: {
+                        paddingTop: 60,
+                    },
+                    tabBarIconStyle: {
+                        width: 100,
+                        height: 100,
+                    },
                     tabBarIcon: ({ size, color }) =>
                         <MaterialIcons name='portrait' size={size} color={color} />
                 }}
@@ -34,7 +47,16 @@ export default function TabRoutesLayout() {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: "Home",
+                    title: "",
+                    tabBarIconStyle: {
+                        width: 70,
+                        height: 70,
+                        borderRadius: 50,
+                        marginBottom: 30,
+                        backgroundColor: '#005',
+                        borderWidth: 1,
+                        borderColor: '#eee'
+                    },
                     tabBarIcon: ({ size, color }) =>
                         <MaterialIcons name='home' size={size} color={color} />
                 }}
@@ -43,7 +65,10 @@ export default function TabRoutesLayout() {
                 name="listBalance"
                 options={{
                     title: "Lista",
-                    tabBarIcon: ({ size, color }) =>
+                    tabBarItemStyle: {
+                        paddingTop: 60,
+                    },
+                   tabBarIcon: ({ size, color }) =>
                         <MaterialIcons name='menu' size={size} color={color} />
                 }}
             />
