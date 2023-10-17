@@ -1,6 +1,6 @@
 import { Tabs, Link } from "expo-router";
 import { MaterialIcons } from '@expo/vector-icons'
-import { Image } from "expo-image"; 
+import { Image } from "expo-image";
 
 export default function TabRoutesLayout() {
     return (
@@ -10,16 +10,18 @@ export default function TabRoutesLayout() {
                 tabBarActiveTintColor: '#fff',
                 tabBarStyle: {
                     height: 130,
-                    backgroundColor: '#e9e9ff',
+                    backgroundColor: '#ffffff',
+                    borderWidth: 0,
+                    borderColor: '#fff',
                 },
-                tabBarBackground: ()=>(
-                    <Image 
-                        source={require('../../../assets/footer.png')} 
+                tabBarBackground: () => (
+                    <Image
+                        source={require('../../../assets/footer.png')}
                         style={{
-                            marginTop: 30, 
-                            width: 415, 
+                            marginTop: 30,
+                            width: 415,
                             height: 100
-                        }} 
+                        }}
                     />
                 ),
                 tabBarLabelStyle: {
@@ -54,8 +56,6 @@ export default function TabRoutesLayout() {
                         borderRadius: 50,
                         marginBottom: 30,
                         backgroundColor: '#005',
-                        borderWidth: 1,
-                        borderColor: '#eee'
                     },
                     tabBarIcon: ({ size, color }) =>
                         <MaterialIcons name='home' size={size} color={color} />
@@ -68,10 +68,11 @@ export default function TabRoutesLayout() {
                     tabBarItemStyle: {
                         paddingTop: 60,
                     },
-                   tabBarIcon: ({ size, color }) =>
+                    tabBarIcon: ({ size, color }) =>
                         <MaterialIcons name='menu' size={size} color={color} />
                 }}
             />
         </Tabs>
+
     )
 }

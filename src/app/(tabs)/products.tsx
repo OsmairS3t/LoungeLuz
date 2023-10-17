@@ -1,9 +1,21 @@
-import { View, Text} from 'react-native';
+import { View, Text } from 'react-native';
+import { ImageBackground, SafeAreaView } from 'react-native'
 
-export default function Products(){
+export default function Products() {
     return (
-        <View>
-            <Text>Produtos</Text>
-        </View>
-    ) 
+        <SafeAreaView style={{ flex: 1 }}>
+            <ImageBackground
+                source={require('../../../assets/background.png')}
+                style={{
+                    flex: 1,
+                    width: 410,
+                    height: 840,
+                }}
+            >
+                <View>
+                    <Text>Produtos</Text>
+                </View>
+            </ImageBackground>
+        </SafeAreaView >
+    )
 }
