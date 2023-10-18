@@ -16,7 +16,7 @@ export default function TabRoutesLayout() {
                 },
                 tabBarBackground: () => (
                     <Image
-                        source={require('../../../assets/footer.png')}
+                        source={require('@assets/footer.png')}
                         style={{
                             marginTop: 30,
                             width: '100%',
@@ -32,20 +32,15 @@ export default function TabRoutesLayout() {
             }}
         >
             <Tabs.Screen
-                name="products"
+                name="balance"
                 options={{
-                    title: "Produtos",
-                    tabBarItemStyle: {
-                        paddingTop: 60,
-                    },
-                    tabBarIconStyle: {
-                        width: 100,
-                        height: 100,
-                    },
-                    tabBarIcon: ({ size, color }) =>
-                        <Barcode size={36} color={color} />
+                    title: "Lançamentos",
+                    tabBarItemStyle: { paddingTop: 60 },
+                    tabBarIconStyle: { width: 100, height: 100, },
+                    tabBarIcon: ({ size, color }) => <Barcode size={36} color={color} />
                 }}
             />
+
             <Tabs.Screen
                 name="index"
                 options={{
@@ -61,6 +56,7 @@ export default function TabRoutesLayout() {
                         <House size={size} color={color} />
                 }}
             />
+
             <Tabs.Screen
                 name="listBalance"
                 options={{

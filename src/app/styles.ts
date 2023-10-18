@@ -13,16 +13,12 @@ export const styles = StyleSheet.create({
         height: 840,
     },
 
-    contentHome: {
-        marginTop: 10,
-        justifyContent: 'flex-start'
-    },
-
-    headerHome: {
+    header: {
         height: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginTop: 10,
         marginBottom: 10,
         padding: 10
     },
@@ -41,12 +37,19 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#ffffff',
+        height: 60,
         padding: 8,
         borderRadius: 5,
         marginLeft: 20,
         marginRight: 20,
         marginTop: 15,
         marginBottom: 12
+    },
+
+    content: {
+        marginTop: 10,
+        marginLeft: 20,
+        marginRight: 20,
     },
 
     cardBalance: {
@@ -73,14 +76,6 @@ export const styles = StyleSheet.create({
         fontWeight: '600',
     },
 
-    blockGroupButtons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-        marginLeft: 20,
-        marginRight: 20,
-    },
-
     buttonEntrada: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -101,33 +96,65 @@ export const styles = StyleSheet.create({
 
     cardList: {
         width: '100%',
-        height: 512,
+        height: 'auto',
         backgroundColor: '#ffffff',
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
         paddingLeft: 15,
         paddingRight: 15,
     },
 
     titleCardList: {
-        paddingTop: 20,
+        paddingTop: 10,
         paddingBottom: 10,
-        fontSize: 20,
+        fontSize: 14,
         fontWeight: '600'
     },
 
     itemList: {
         backgroundColor: '#ffffff',
         marginBottom: 5,
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 10,
-        paddingBottom: 10,
+        padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderWidth: 1,
         borderColor: '#b8b8b8',
         borderRadius: 10,
+    },
+
+    headerScreen: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        marginBottom: 10,
+    },
+
+    form: {
+        height: '100%',
+        paddingTop: 10,
+        paddingRight: 20,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        gap: 10,
+        backgroundColor: '#ffffff',
+    },
+
+    input: {
+        height: 60,
+        padding: 16,
+        backgroundColor: '#EDEDED',
+        borderWidth: 2,
+        borderColor: '#737373',
+        borderRadius: 10,
+        fontSize: 16,
+    },
+
+    blockGroupButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
 
 });
