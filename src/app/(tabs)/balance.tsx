@@ -1,40 +1,27 @@
 import Header from '@components/header';
-import { Link } from 'expo-router';
-import { CaretDoubleDown, CaretDoubleUp } from 'phosphor-react-native';
-import { View, Text, TextInput, Button } from 'react-native';
-import { ImageBackground, SafeAreaView } from 'react-native'
+import { CaretDoubleDown, CaretDoubleUp, FileArrowUp } from 'phosphor-react-native';
+import { ImageBackground, SafeAreaView, View, Text, TextInput, Pressable } from 'react-native';
 import { styles } from '../styles'
 
 export default function Products() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ImageBackground
-                source={require('@assets/background.png')}
-                style={{
-                    flex: 1,
-                    width: 410,
-                    height: 840,
-                }}
-            >
+            <ImageBackground source={require('@assets/background.png')} style={styles.imgBackground}>
                 <Header />
 
                 <View style={styles.form}>
                     <TextInput placeholder='Categoria' style={styles.input} />
 
                     <View style={styles.blockGroupButtons}>
-                        <Link href='/'>
-                            <View style={styles.buttonEntrada}>
-                                <CaretDoubleUp size={20} color='#fff' />
-                                <Text style={{ color: '#ffffff', fontSize: 20, marginLeft: 10 }}>Entrada</Text>
-                            </View>
-                        </Link>
+                        <Pressable style={styles.buttonType}>
+                            <CaretDoubleUp size={18} color='#858585' />
+                            <Text style={{ color: '#858585', fontSize: 16 }}>Entrada</Text>
+                        </Pressable>
 
-                        <Link href='/'>
-                            <View style={styles.buttonSaida}>
-                                <CaretDoubleDown size={20} color='#ffffff' />
-                                <Text style={{ color: '#ffffff', fontSize: 20 }}>Saída</Text>
-                            </View>
-                        </Link>
+                        <Pressable style={styles.buttonType}>
+                            <CaretDoubleDown size={18} color='#858585' />
+                            <Text style={{ color: '#858585', fontSize: 16 }}>Saída</Text>
+                        </Pressable>
                     </View>
 
                     <TextInput placeholder='Descrição' style={styles.input} />
@@ -43,7 +30,23 @@ export default function Products() {
 
                     <TextInput placeholder='Data do lançamento' style={styles.input} />
 
-                    <Button title='Salvar' color='#00277A' />
+                    <View style={styles.inputFileBlock}>
+                        <View style={styles.inputFile}>
+                            <FileArrowUp color='#858585' size={32} />
+                            <Text style={styles.textLabel}>Arquivo</Text>
+                        </View>
+                        <View style={styles.inputFileImage}>
+
+                        </View>
+                    </View>
+
+                    <Pressable
+                        onPress={() => { }}
+                        style={styles.buttonDefault}
+                    >
+                        <Text style={styles.textButtonDefault}>Salvar</Text>
+                    </Pressable>
+
                 </View>
 
             </ImageBackground>
