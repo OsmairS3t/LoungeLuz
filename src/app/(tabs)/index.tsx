@@ -1,45 +1,62 @@
-import { View, Text, SafeAreaView, ImageBackground, Image, FlatList } from 'react-native'
-import { CaretDoubleUp, CaretDoubleDown, SignOut } from 'phosphor-react-native'
+import { SafeAreaView, FlatList } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { styles } from '../styles'
 import { dataList } from '@utils/database'
 import Header from '@components/header'
+
+import {
+    Container,
+    BackgroundImage,
+    CardBalance,
+    TextCardBalance,
+    TextPriceCardBalance,
+    CardList,
+    ItemList,
+    ItemListContainer,
+    ItemListContainerTop,
+    ItemListContainerBottom,
+    ItemListContainerName,
+    ItemListContainerType,
+    ItemListContainerPrice,
+    ItemListContainerDate,
+    ItemListContainerIcon,
+    TitleCardList
+} from '../../styles'
 
 export default function Home() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ImageBackground source={require('@assets/background.png')} style={styles.imgBackground}>
+            <BackgroundImage source={require('@assets/background.png')}>
                 <Header />
 
-                <View style={styles.cardBalance}>
-                    <Text style={styles.textCardBalance}>Saldo Atual</Text>
-                    <Text style={styles.textPriceCardBalance}>R$ 895,50</Text>
-                </View>
+                <CardBalance>
+                    <TextCardBalance>Saldo Atual</TextCardBalance>
+                    <TextPriceCardBalance>R$ 895,50</TextPriceCardBalance>
+                </CardBalance>
 
-                <View style={styles.cardList}>
-                    <Text style={styles.titleCardList}>Últimos Lançamentos:</Text>
+                <CardList>
+                    <TitleCardList>Últimos Lançamentos:</TitleCardList>
                     <FlatList
                         data={dataList}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => (
-                            <View style={styles.itemList}>
-                                <View style={{ alignItems: 'flex-start' }}>
-                                    <Text style={{ fontSize: 16, fontWeight: '600' }}>{item.name}</Text>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                                        <CaretDoubleDown color='#000' size={14} />
-                                        <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.type}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ fontSize: 18, fontWeight: '600' }}>R$ {item.price},00</Text>
-                                    <Text style={{ fontSize: 12 }}>{item.datebalance}</Text>
-                                </View>
-                            </View>
+                            <ItemList>
+                                <ItemListContainer>
+                                    <ItemListContainerName>{item.name}</ItemListContainerName>
+                                    <ItemListContainerTop>
+                                        <ItemListContainerIcon />
+                                        <ItemListContainerType>{item.type}</ItemListContainerType>
+                                    </ItemListContainerTop>
+                                </ItemListContainer>
+                                <ItemListContainerBottom>
+                                    <ItemListContainerPrice>R$ {item.price},00</ItemListContainerPrice>
+                                    <ItemListContainerDate>{item.datebalance}</ItemListContainerDate>
+                                </ItemListContainerBottom>
+                            </ItemList>
                         )}
                     />
-                </View>
-            </ImageBackground>
+                </CardList>
+            </BackgroundImage>
             <StatusBar translucent backgroundColor='transparent' />
         </SafeAreaView>
     )

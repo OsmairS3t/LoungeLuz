@@ -1,36 +1,54 @@
-import { StyleSheet } from "react-native";
+import styled from 'styled-components/native';
+import { SignOut } from 'phosphor-react-native';
 
-export const styles = StyleSheet.create({
-    header: {
-        height: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        padding: 10
-    },
+export const Container = styled.View``;
 
-    imgProfile: {
-        width: 45,
-        borderRadius: 50
-    },
+export const HeaderContainer = styled.View`
+    height: 50px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    `;
 
-    textProfile: {
-        color: '#ffffff',
-    },
+export const Profile = styled.View`
+    flex-direction: row; 
+    justify-content: flex-start; 
+    gap: 10px;
+`;
 
-    headerApp: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#ffffff6f',
-        height: 60,
-        padding: 8,
-        borderRadius: 5,
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 15,
-        marginBottom: 12
-    },
-})
+export const GroupTextProfile = styled.View``;
+
+export const ImgProfile = styled.Image`
+    width: 45px;
+    border-radius: 50px;
+`;
+
+export const TextProfile = styled.Text`
+    color: #ffffff;
+`;
+
+export const HeaderApp = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff6f;
+    height: 60px;
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 15px;
+    margin-bottom: 12px;
+`;
+
+export const TitleHeaderApp = styled.Text`
+    font-weight: 600;
+`;
+
+export const IconSignOut = styled(SignOut).attrs(()=>({
+    color: '#FFFFFF'
+}))`
+`;

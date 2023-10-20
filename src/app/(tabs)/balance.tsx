@@ -1,55 +1,160 @@
+import { useState } from 'react';
+import { SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Header from '@components/header';
-import { CaretDoubleDown, CaretDoubleUp, FileArrowUp } from 'phosphor-react-native';
-import { ImageBackground, SafeAreaView, View, Text, TextInput, Pressable } from 'react-native';
-import { styles } from '../styles'
+import { useForm, Controller } from 'react-hook-form';
+import yupResolver from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import {
+    BackgroundImage,
+    Form,
+    BlockGroupButtons,
+    ButtonType,
+    ButtonTypeText,
+    InputDefault,
+    InputFile,
+    InputFileBlock,
+    InputFileImage,
+    TextLabel,
+    ButtonDefault,
+    TextButtonDefault,
+    IconTypeIncome,
+    IconTypeOutcome,
+    IconFileUpload,
+} from '../../styles'
+//https://developerplus.com.br/como-utilizar-o-keyboardawarescrollview-no-react-native-para-android/
+const schema = yup.object().shape({
+    category: yup.string().required('A categoria é necessária.'),
+    description: yup.string().required('A descrição é necessária.'),
+    price: yup.number().min(1).required('Favor informe valor numérico.'),
+    datebalance: yup.string().required('A data deve ser válida.'),
+})
+
+type FormData = {
+    category: string;
+    description: string;
+    price: number;
+    datebalance: string;
+}
 
 export default function Products() {
+    const [category, setCategory] = useState('')
+    const [type, setType] = useState('')
+    const [description, setDescription] = useState('')
+    const [price, setPrice] = useState('0')
+    const [dateBalance, setDateBalance] = useState('')
+    const [isActive, setIsActive] = useState(false)
+
+    const { register,
+        setValue,
+        control,
+        handleSubmit,
+        formState: { errors }, } = useForm<FormData>();
+
+    function onSubmit(data: FormData) {
+        console.log(data)
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ImageBackground source={require('@assets/background.png')} style={styles.imgBackground}>
-                <Header />
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <BackgroundImage source={require('@assets/background.png')}>
+                    <Header />
 
-                <View style={styles.form}>
-                    <TextInput placeholder='Categoria' style={styles.input} />
+                    <Form>
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <InputDefault
+                                    placeholder="Categoria"
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                />
+                            )}
+                            name="category"
+                        />
 
-                    <View style={styles.blockGroupButtons}>
-                        <Pressable style={styles.buttonType}>
-                            <CaretDoubleUp size={18} color='#858585' />
-                            <Text style={{ color: '#858585', fontSize: 16 }}>Entrada</Text>
-                        </Pressable>
+                        <BlockGroupButtons>
+                            <ButtonType>
+                                <IconTypeIncome />
+                                <ButtonTypeText>Entrada</ButtonTypeText>
+                            </ButtonType>
 
-                        <Pressable style={styles.buttonType}>
-                            <CaretDoubleDown size={18} color='#858585' />
-                            <Text style={{ color: '#858585', fontSize: 16 }}>Saída</Text>
-                        </Pressable>
-                    </View>
+                            <ButtonType>
+                                <IconTypeOutcome />
+                                <ButtonTypeText>Saída</ButtonTypeText>
+                            </ButtonType>
+                        </BlockGroupButtons>
 
-                    <TextInput placeholder='Descrição' style={styles.input} />
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <InputDefault
+                                    placeholder="Descrição"
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                />
+                            )}
+                            name="description"
+                        />
 
-                    <TextInput placeholder='Valor' style={styles.input} />
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <InputDefault
+                                    placeholder="Valor"
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={String(value)}
+                                />
+                            )}
+                            name="price"
+                        />
 
-                    <TextInput placeholder='Data do lançamento' style={styles.input} />
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <InputDefault
+                                    placeholder="Data do lançamento"
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                />
+                            )}
+                            name="datebalance"
+                        />
 
-                    <View style={styles.inputFileBlock}>
-                        <View style={styles.inputFile}>
-                            <FileArrowUp color='#858585' size={32} />
-                            <Text style={styles.textLabel}>Arquivo</Text>
-                        </View>
-                        <View style={styles.inputFileImage}>
+                        <InputFileBlock>
+                            <InputFile>
+                                <IconFileUpload />
+                                <TextLabel>Arquivo</TextLabel>
+                            </InputFile>
+                            <InputFileImage>
 
-                        </View>
-                    </View>
+                            </InputFileImage>
+                        </InputFileBlock>
 
-                    <Pressable
-                        onPress={() => { }}
-                        style={styles.buttonDefault}
-                    >
-                        <Text style={styles.textButtonDefault}>Salvar</Text>
-                    </Pressable>
+                        <ButtonDefault onPress={() => { handleSubmit(onSubmit) }}>
+                            <TextButtonDefault>Salvar</TextButtonDefault>
+                        </ButtonDefault>
 
-                </View>
+                    </Form>
 
-            </ImageBackground>
+                </BackgroundImage>
+            </TouchableWithoutFeedback>
         </SafeAreaView >
     )
 }

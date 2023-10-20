@@ -1,14 +1,35 @@
-import { View, Text, FlatList, Alert } from 'react-native'
-import { ImageBackground, SafeAreaView, Modal, Pressable } from 'react-native'
-import { CaretDoubleDown, Faders } from 'phosphor-react-native'
-import { styles } from '../styles'
+import { FlatList, Alert } from 'react-native'
+import { SafeAreaView, Modal, Pressable } from 'react-native'
 import { dataList } from '@utils/database'
 import Header from '@components/header'
 import { useEffect, useState } from 'react'
-import { TextInput } from 'react-native-gesture-handler'
 import { IBalance } from '@utils/interface'
+import {
+    BackgroundImage,
+    CardList,
+    TitleCardList,
+    ItemList,
+    ItemListContainer,
+    ItemListContainerIcon,
+    ItemListContainerName,
+    ItemListContainerType,
+    ItemListContainerPrice,
+    ItemListContainerDate,
+    ItemListContainerTop,
+    ItemListContainerBottom,
+    IconFilter,
+    ModalFilter,
+    ModalFilterGroup,
+    TextLabel,
+    InputDefault,
+    HeaderScreen,
+    ButtonDefault,
+    TextButtonDefault,
+} from '../../styles'
 
 export default function ListBalance() {
+    const [dateBalance, setDateBalance] = useState('')
+    const [type, setType] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
     const [balances, setBalances] = useState<IBalance[]>(dataList)
 
@@ -30,64 +51,65 @@ export default function ListBalance() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ImageBackground source={require('@assets/background.png')} style={styles.imgBackground}>
+            <BackgroundImage source={require('@assets/background.png')}>
                 <Header />
 
-                <View style={styles.cardList}>
-                    <View style={styles.headerScreen}>
-                        <Text style={styles.titleCardList}>Lista de Lançamentos:</Text>
+                <CardList>
+                    <HeaderScreen>
+                        <TitleCardList>Lista de Lançamentos:</TitleCardList>
                         <Pressable onPress={() => setModalVisible(!modalVisible)}>
-                            <Faders color='#000000' size={32} />
+                            <IconFilter />
                         </Pressable>
-                    </View>
+                    </HeaderScreen>
 
                     <FlatList
                         data={balances}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => (
-                            <View style={styles.itemList}>
-                                <View style={{ alignItems: 'flex-start' }}>
-                                    <Text style={{ fontSize: 16, fontWeight: '600' }}>{item.name}</Text>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                                        <CaretDoubleDown color='#000' size={14} />
-                                        <Text style={{ marginLeft: 5, fontSize: 12 }}>{item.type}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ fontSize: 18, fontWeight: '600' }}>R$ {item.price},00</Text>
-                                    <Text style={{ fontSize: 12 }}>{item.datebalance}</Text>
-                                </View>
-                            </View>
+                            <ItemList>
+                                <ItemListContainer>
+                                    <ItemListContainerName>{item.name}</ItemListContainerName>
+                                    <ItemListContainerTop>
+                                        <ItemListContainerIcon />
+                                        <ItemListContainerType>{item.type}</ItemListContainerType>
+                                    </ItemListContainerTop>
+                                </ItemListContainer>
+                                <ItemListContainerBottom>
+                                    <ItemListContainerPrice>R$ {item.price},00</ItemListContainerPrice>
+                                    <ItemListContainerDate>{item.datebalance}</ItemListContainerDate>
+                                </ItemListContainerBottom>
+                            </ItemList>
                         )}
                     />
-                </View>
+                </CardList>
 
                 <Modal
-                    animationType="slide"
+                    animationType="fade"
                     transparent={true}
                     visible={modalVisible}
                     onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
                         setModalVisible(!modalVisible);
                     }}>
-                    <View style={styles.modalFilter}>
-                        <Text style={styles.titleCardList}>FILTRAR POR:</Text>
-                        <View style={styles.modalFilterGroup}>
-                            <Text style={styles.textLabel}>Data:</Text>
-                            <TextInput placeholder='01/11/2023' />
-                        </View>
-                        <View style={styles.modalFilterGroup}>
-                            <Text style={styles.textLabel}>Tipo:</Text>
-                            <TextInput placeholder='Entrada' />
-                        </View>
-                        <Pressable
-                            style={styles.buttonDefault}
-                            onPress={() => filterBalances('', '')}>
-                            <Text style={styles.textButtonDefault}>Filtrar</Text>
-                        </Pressable>
-                    </View>
+                    <ModalFilter>
+                        <TitleCardList>FILTRAR POR:</TitleCardList>
+                        <ModalFilterGroup>
+                            <TextLabel>Data:</TextLabel>
+                            <InputDefault
+                                placeholder=''
+                                value={dateBalance}
+                                onChangeText={setDateBalance}
+                            />
+                        </ModalFilterGroup>
+                        <ModalFilterGroup>
+                            <TextLabel>Tipo:</TextLabel>
+                            <InputDefault placeholder='' />
+                        </ModalFilterGroup>
+                        <ButtonDefault onPress={() => filterBalances(dateBalance, type)}>
+                            <TextButtonDefault>Filtrar</TextButtonDefault>
+                        </ButtonDefault>
+                    </ModalFilter>
                 </Modal>
-            </ImageBackground>
+            </BackgroundImage>
         </SafeAreaView>
     )
 }
