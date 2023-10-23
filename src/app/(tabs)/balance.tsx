@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Header from '@components/header';
 import { useForm, Controller } from 'react-hook-form';
-import yupResolver from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
     BackgroundImage,
@@ -21,6 +21,7 @@ import {
     IconTypeOutcome,
     IconFileUpload,
 } from '../../styles'
+
 //https://developerplus.com.br/como-utilizar-o-keyboardawarescrollview-no-react-native-para-android/
 const schema = yup.object().shape({
     category: yup.string().required('A categoria é necessária.'),
@@ -44,13 +45,15 @@ export default function Products() {
     const [dateBalance, setDateBalance] = useState('')
     const [isActive, setIsActive] = useState(false)
 
-    const { register,
-        setValue,
+    const {
         control,
+        register,
         handleSubmit,
-        formState: { errors }, } = useForm<FormData>();
+        formState: { errors }, } = useForm<FormData>({
+            resolver: yupResolver(schema)
+        });
 
-    function onSubmit(data: FormData) {
+    function OnSubmit(data: FormData) {
         console.log(data)
     }
 
@@ -66,12 +69,12 @@ export default function Products() {
                             rules={{
                                 required: true,
                             }}
-                            render={({ field: { onChange, onBlur, value } }) => (
+                            render={({ field: { value } }) => (
                                 <InputDefault
                                     placeholder="Categoria"
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={setCategory}
                                     value={value}
+                                    {...register('category')}
                                 />
                             )}
                             name="category"
@@ -94,12 +97,12 @@ export default function Products() {
                             rules={{
                                 required: true,
                             }}
-                            render={({ field: { onChange, onBlur, value } }) => (
+                            render={({ field: { value } }) => (
                                 <InputDefault
                                     placeholder="Descrição"
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={setDescription}
                                     value={value}
+                                    {...register('description')}
                                 />
                             )}
                             name="description"
@@ -110,12 +113,12 @@ export default function Products() {
                             rules={{
                                 required: true,
                             }}
-                            render={({ field: { onChange, onBlur, value } }) => (
+                            render={({ field: { value } }) => (
                                 <InputDefault
                                     placeholder="Valor"
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={setPrice}
                                     value={String(value)}
+                                    {...register('price')}
                                 />
                             )}
                             name="price"
@@ -126,12 +129,12 @@ export default function Products() {
                             rules={{
                                 required: true,
                             }}
-                            render={({ field: { onChange, onBlur, value } }) => (
+                            render={({ field: { value } }) => (
                                 <InputDefault
                                     placeholder="Data do lançamento"
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={setDateBalance}
                                     value={value}
+                                    {...register('datebalance')}
                                 />
                             )}
                             name="datebalance"
@@ -147,7 +150,7 @@ export default function Products() {
                             </InputFileImage>
                         </InputFileBlock>
 
-                        <ButtonDefault onPress={() => { handleSubmit(onSubmit) }}>
+                        <ButtonDefault onPress={handleSubmit(OnSubmit)}>
                             <TextButtonDefault>Salvar</TextButtonDefault>
                         </ButtonDefault>
 

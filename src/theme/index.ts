@@ -4,6 +4,7 @@ export default {
         WHITE: '#FFFFFF',
 
         TEXT: '#000000',
+        TEXT_INPUT: '#000000',
         TEXT_BUTTON_ENABLED: '#FFFFFF',
         TEXT_BUTTON_DISABLED: '#858585',
 

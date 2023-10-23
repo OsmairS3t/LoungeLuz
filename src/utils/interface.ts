@@ -1,5 +1,6 @@
 export interface IBalance {
     id: string;
+    idcategory: number;
     name: string;
     type: string;
     price: number;
