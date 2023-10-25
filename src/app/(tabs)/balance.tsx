@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import Header from '@components/header';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,6 +21,7 @@ import {
     IconTypeOutcome,
     IconFileUpload,
 } from '../../styles'
+import { TextInput } from 'react-native-gesture-handler';
 
 //https://developerplus.com.br/como-utilizar-o-keyboardawarescrollview-no-react-native-para-android/
 const schema = yup.object().shape({
@@ -53,111 +54,98 @@ export default function Products() {
             resolver: yupResolver(schema)
         });
 
-    function OnSubmit(data: FormData) {
+    const OnSubmit = (data: FormData) => {
         console.log(data)
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <BackgroundImage source={require('@assets/background.png')}>
-                    <Header />
 
-                    <Form>
-                        <Controller
+        <BackgroundImage source={require('@assets/background.png')}>
+            <Header />
+
+            <Form>
+                <Controller
+                    control={control}
+                    name='category'
+                    rules={{ required: true }}
+                    render={({ field: { value, onChange } }) => (
+                        <InputDefault
+                            value={value}
+                            placeholder='Categoria'
+                            onChangeText={onChange}
+                        />
+                    )}
+                />
+
+                <BlockGroupButtons>
+                    <ButtonType>
+                        <IconTypeIncome />
+                        <ButtonTypeText>Entrada</ButtonTypeText>
+                    </ButtonType>
+
+                    <ButtonType>
+                        <IconTypeOutcome />
+                        <ButtonTypeText>Saída</ButtonTypeText>
+                    </ButtonType>
+                </BlockGroupButtons>
+
+                <Controller
+                    control={control}
+                    name='description'
+                    rules={{ required: true }}
+                    render={({ field: { value, onChange } }) => (
+                        <InputDefault
+                            value={value}
+                            placeholder='Descrição'
+                            onChangeText={onChange}
+                        />
+                    )}
+                />
+
+                {/* <Controller
                             control={control}
-                            rules={{
-                                required: true,
-                            }}
-                            render={({ field: { value } }) => (
+                            name='price'
+                            rules={{ required: true }}
+                            render={({ field: { value, onChange } }) => (
                                 <InputDefault
-                                    placeholder="Categoria"
-                                    onChangeText={setCategory}
                                     value={value}
-                                    {...register('category')}
+                                    placeholder='Preço'
+                                    onChangeText={onChange}
                                 />
                             )}
-                            name="category"
+                        /> */}
+
+                <Controller
+                    control={control}
+                    name='datebalance'
+                    rules={{ required: true }}
+                    render={({ field: { value, onChange } }) => (
+                        <InputDefault
+                            value={value}
+                            placeholder='Data de Lançamento'
+                            onChangeText={onChange}
                         />
+                    )}
+                />
 
-                        <BlockGroupButtons>
-                            <ButtonType>
-                                <IconTypeIncome />
-                                <ButtonTypeText>Entrada</ButtonTypeText>
-                            </ButtonType>
+                <InputFileBlock>
+                    <InputFile>
+                        <IconFileUpload />
+                        <TextLabel>Arquivo</TextLabel>
+                    </InputFile>
+                    <InputFileImage>
 
-                            <ButtonType>
-                                <IconTypeOutcome />
-                                <ButtonTypeText>Saída</ButtonTypeText>
-                            </ButtonType>
-                        </BlockGroupButtons>
+                    </InputFileImage>
+                </InputFileBlock>
 
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                            }}
-                            render={({ field: { value } }) => (
-                                <InputDefault
-                                    placeholder="Descrição"
-                                    onChangeText={setDescription}
-                                    value={value}
-                                    {...register('description')}
-                                />
-                            )}
-                            name="description"
-                        />
+                <ButtonDefault onPress={handleSubmit(OnSubmit)}>
+                    <TextButtonDefault>Salvar</TextButtonDefault>
+                </ButtonDefault>
 
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                            }}
-                            render={({ field: { value } }) => (
-                                <InputDefault
-                                    placeholder="Valor"
-                                    onChangeText={setPrice}
-                                    value={String(value)}
-                                    {...register('price')}
-                                />
-                            )}
-                            name="price"
-                        />
+            </Form>
 
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                            }}
-                            render={({ field: { value } }) => (
-                                <InputDefault
-                                    placeholder="Data do lançamento"
-                                    onChangeText={setDateBalance}
-                                    value={value}
-                                    {...register('datebalance')}
-                                />
-                            )}
-                            name="datebalance"
-                        />
+        </BackgroundImage>
 
-                        <InputFileBlock>
-                            <InputFile>
-                                <IconFileUpload />
-                                <TextLabel>Arquivo</TextLabel>
-                            </InputFile>
-                            <InputFileImage>
 
-                            </InputFileImage>
-                        </InputFileBlock>
-
-                        <ButtonDefault onPress={handleSubmit(OnSubmit)}>
-                            <TextButtonDefault>Salvar</TextButtonDefault>
-                        </ButtonDefault>
-
-                    </Form>
-
-                </BackgroundImage>
-            </TouchableWithoutFeedback>
-        </SafeAreaView >
     )
 }

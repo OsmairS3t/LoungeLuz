@@ -1,5 +1,4 @@
 import { CaretDoubleDown, CaretDoubleUp, Faders, FileArrowUp } from 'phosphor-react-native';
-import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
 
 //index.tsx
@@ -189,7 +188,7 @@ export const TextLabel = styled.Text`
     color: #000000;
 `;
 
-export const ButtonDefault = styled(Pressable)`
+export const ButtonDefault = styled.Pressable`
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 16px;
