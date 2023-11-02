@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { ScrollView, SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert, View, Text, Button } from 'react-native';
 import Header from '@components/header';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -48,35 +48,48 @@ export default function Products() {
 
     const {
         control,
-        register,
         handleSubmit,
-        formState: { errors }, } = useForm<FormData>({
-            resolver: yupResolver(schema)
-        });
+        reset,
+        formState: { errors },
+        } = useForm<FormData>({
+            resolver: yupResolver(schema),
+            defaultValues: {
+                category: '',
+                description: '',
+                price: 0,
+                datebalance: '',
+            },
+        })
 
-    const OnSubmit = (data: FormData) => {
+    const onSubmit = (data :FormData) => {
         console.log(data)
+        reset()
     }
 
     return (
 
         <BackgroundImage source={require('@assets/background.png')}>
             <Header />
-
+            
+            <ScrollView>
             <Form>
                 <Controller
                     control={control}
-                    name='category'
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                        <InputDefault
-                            value={value}
-                            placeholder='Categoria'
-                            onChangeText={onChange}
-                        />
+                    rules={{
+                    required: true,
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                    <InputDefault
+                        placeholder="Categorias"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                    />
                     )}
+                    name="category"
                 />
-
+                {errors.category && <Text>{errors.category.message}</Text>}
+                    
                 <BlockGroupButtons>
                     <ButtonType>
                         <IconTypeIncome />
@@ -84,49 +97,61 @@ export default function Products() {
                     </ButtonType>
 
                     <ButtonType>
-                        <IconTypeOutcome />
-                        <ButtonTypeText>Saída</ButtonTypeText>
+                    <IconTypeOutcome />
+                    <ButtonTypeText>Saída</ButtonTypeText>
                     </ButtonType>
                 </BlockGroupButtons>
 
                 <Controller
                     control={control}
-                    name='description'
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                        <InputDefault
-                            value={value}
-                            placeholder='Descrição'
-                            onChangeText={onChange}
-                        />
+                    rules={{
+                    maxLength: 100,
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                    <InputDefault
+                        placeholder="Descrição"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                    />
                     )}
+                    name="description"
                 />
-
-                {/* <Controller
-                            control={control}
-                            name='price'
-                            rules={{ required: true }}
-                            render={({ field: { value, onChange } }) => (
-                                <InputDefault
-                                    value={value}
-                                    placeholder='Preço'
-                                    onChangeText={onChange}
-                                />
-                            )}
-                        /> */}
+                <Text>{errors.description && errors.description.message}</Text>
 
                 <Controller
                     control={control}
-                    name='datebalance'
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                        <InputDefault
-                            value={value}
-                            placeholder='Data de Lançamento'
-                            onChangeText={onChange}
-                        />
+                    rules={{
+                    maxLength: 100,
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                    <InputDefault
+                        placeholder="Preço"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value.toString()}
+                    />
                     )}
+                    name="price"
                 />
+                <Text>{errors.price && errors.price.message}</Text>
+
+                <Controller
+                    control={control}
+                    rules={{
+                    maxLength: 100,
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                    <InputDefault
+                        placeholder="Data de lançamento"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                    />
+                    )}
+                    name="datebalance"
+                />
+                <Text>{errors.description && errors.description.message}</Text>
 
                 <InputFileBlock>
                     <InputFile>
@@ -138,11 +163,9 @@ export default function Products() {
                     </InputFileImage>
                 </InputFileBlock>
 
-                <ButtonDefault onPress={handleSubmit(OnSubmit)}>
-                    <TextButtonDefault>Salvar</TextButtonDefault>
-                </ButtonDefault>
-
-            </Form>
+                <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+               </Form>
+               </ScrollView>
 
         </BackgroundImage>
 
