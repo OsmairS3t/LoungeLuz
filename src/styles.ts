@@ -1,7 +1,8 @@
-import { CaretDoubleDown, CaretDoubleUp, Faders, FileArrowUp } from 'phosphor-react-native';
+import { Camera, CaretDoubleDown, CaretDoubleUp, Faders, FileArrowUp, Image } from 'phosphor-react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import SelectDropdown from 'react-native-select-dropdown';
 import styled from 'styled-components/native';
+import { Image as Img } from 'react-native';
 
 //index.tsx
 export const Container = styled.View`
@@ -200,6 +201,55 @@ export const InputFileImage = styled.View`
 export const TextLabel = styled.Text`
     color: #000000;
 `;
+
+
+export const GroupImage = styled.View`
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+`;
+
+export const GroupButton = styled.View`
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 4px;
+`;
+
+export const PhotoImage = styled.View`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ImgCapture = styled(Img)`
+    width: 280px;
+    height: 280px;
+`;
+
+export const BtnImage = styled.Pressable`
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    background-color: ${({ theme }) => theme.COLORS.BG_SCREEN};
+`;
+
+export const IconCamera = styled(Camera).attrs(({theme})=>({
+    size: 32,
+    color: '#FAFAFA'
+}))``;
+
+export const IconImage = styled(Image).attrs(({theme})=>({
+    size: 32,
+    color: '#FAFAFA'
+}))``;
+
+
 
 export const ButtonDefault = styled.Pressable`
     margin-top: 10px;

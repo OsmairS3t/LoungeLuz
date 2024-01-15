@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Category } from '../../utils/database'
+import * as ImagePicker from 'expo-image-picker';
 
 import {
     BackgroundImage,
@@ -20,6 +21,13 @@ import {
     InputMasked,
     InputFile,
     InputFileBlock,
+    GroupImage,
+    GroupButton,
+    PhotoImage,
+    ImgCapture,
+    BtnImage,
+    IconCamera,
+    IconImage,
     InputFileImage,
     TextLabel,
     ButtonDefault,
@@ -51,8 +59,8 @@ export default function Products() {
     const [isActive, setIsActive] = useState(false)
     const categories = ['Lanchonete','Ofertas','Eventos','Produtos']
     const [isTypeBalanceEnabled, setIsTypeBalanceEnabled] = useState(false);
+    const [imgComprove, setImgComprove] = useState<string>('/assets/farol.png')
     const toggleSwitch = () => setIsTypeBalanceEnabled(previousState => !previousState);
-
     const {
         control,
         handleSubmit,
@@ -67,6 +75,33 @@ export default function Products() {
             },
         })
 
+        const PickImageLibrary = async () => {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [2, 4],
+                quality: 1
+            })
+            console.log(result)
+            if (!result.canceled) {
+                setImgComprove(result.assets[0].uri)
+            }
+        }
+    
+        const PickImageCamera = async () => {
+            //LoadImage();
+            let permissionResult = await ImagePicker.requestCameraPermissionsAsync()
+            if (permissionResult.granted === false) {
+                alert("You've refused to allow this appp to access your camera!");
+                return;
+            }
+            const result = await ImagePicker.launchCameraAsync();
+            console.log(result)
+            if (!result.canceled) {
+                setImgComprove(result.assets[0].uri);
+                console.log(result.assets[0].uri);
+            }
+        }        
     const onSubmit = (data :FormData) => {
         if (category === 0) {
             setMessageCategory('É necessário informar a categoria.')
@@ -184,15 +219,20 @@ export default function Products() {
                 />
                 {errors.description && <Text>{errors.description.message}</Text>}
 
-                <InputFileBlock>
-                    <InputFile>
-                        <IconFileUpload />
-                        <TextLabel>Arquivo</TextLabel>
-                    </InputFile>
-                    <InputFileImage>
-
-                    </InputFileImage>
-                </InputFileBlock>
+                <GroupImage>
+                    <GroupButton>
+                        <TexttypeBalance>Incluir Comprovante:</TexttypeBalance>
+                        <BtnImage onPress={PickImageLibrary}>
+                            <IconImage />
+                        </BtnImage>
+                        <BtnImage onPress={PickImageCamera}>
+                            <IconCamera />
+                        </BtnImage>
+                    </GroupButton>
+                    <PhotoImage>
+                        <ImgCapture source={{ uri: imgComprove }} />
+                    </PhotoImage>
+                </GroupImage>
 
                 <ButtonDefault onPress={handleSubmit(onSubmit)}>
                     <TextButtonDefault>Salvar</TextButtonDefault>
