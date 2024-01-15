@@ -37,10 +37,11 @@ export default function Home() {
                 <CardList>
                     <TitleCardList>Últimos Lançamentos:</TitleCardList>
                     <FlatList
+                        alwaysBounceVertical
                         data={dataList}
                         keyExtractor={item => item.id}
                         renderItem={({ item }) => (
-                            <ItemList>
+                            <ItemList key={item.id}>
                                 <ItemListContainer>
                                     <ItemListContainerName>{item.name}</ItemListContainerName>
                                     <ItemListContainerTop>
@@ -49,7 +50,10 @@ export default function Home() {
                                     </ItemListContainerTop>
                                 </ItemListContainer>
                                 <ItemListContainerBottom>
-                                    <ItemListContainerPrice>R$ {item.price},00</ItemListContainerPrice>
+                                    <ItemListContainerPrice>{Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    }).format(item.price)}</ItemListContainerPrice>
                                     <ItemListContainerDate>{item.datebalance}</ItemListContainerDate>
                                 </ItemListContainerBottom>
                             </ItemList>

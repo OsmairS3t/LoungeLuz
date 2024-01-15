@@ -1,50 +1,57 @@
 import { useState } from 'react';
-import { ScrollView, SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert, View, Text, Button } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import Header from '@components/header';
+import { Feather } from '@expo/vector-icons'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { Category } from '../../utils/database'
+
 import {
     BackgroundImage,
     Form,
-    BlockGroupButtons,
-    ButtonType,
+    GroupType,
     ButtonTypeText,
+    SelectDefault,
+    TitleTypeBalance,
+    TexttypeBalance,
+    TypeBalance,
     InputDefault,
+    InputMasked,
     InputFile,
     InputFileBlock,
     InputFileImage,
     TextLabel,
     ButtonDefault,
     TextButtonDefault,
-    IconTypeIncome,
-    IconTypeOutcome,
     IconFileUpload,
 } from '../../styles'
-import { TextInput } from 'react-native-gesture-handler';
 
 //https://developerplus.com.br/como-utilizar-o-keyboardawarescrollview-no-react-native-para-android/
 const schema = yup.object().shape({
-    category: yup.string().required('A categoria é necessária.'),
     description: yup.string().required('A descrição é necessária.'),
     price: yup.number().min(1).required('Favor informe valor numérico.'),
     datebalance: yup.string().required('A data deve ser válida.'),
 })
 
 type FormData = {
-    category: string;
     description: string;
     price: number;
     datebalance: string;
 }
 
 export default function Products() {
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(0)
+    const [messageCategory, setMessageCategory] = useState('')
     const [type, setType] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState('0')
     const [dateBalance, setDateBalance] = useState('')
+    const [file, setFile] = useState('')
     const [isActive, setIsActive] = useState(false)
+    const categories = ['Lanchonete','Ofertas','Eventos','Produtos']
+    const [isTypeBalanceEnabled, setIsTypeBalanceEnabled] = useState(false);
+    const toggleSwitch = () => setIsTypeBalanceEnabled(previousState => !previousState);
 
     const {
         control,
@@ -54,7 +61,6 @@ export default function Products() {
         } = useForm<FormData>({
             resolver: yupResolver(schema),
             defaultValues: {
-                category: '',
                 description: '',
                 price: 0,
                 datebalance: '',
@@ -62,45 +68,63 @@ export default function Products() {
         })
 
     const onSubmit = (data :FormData) => {
-        console.log(data)
-        reset()
+        if (category === 0) {
+            setMessageCategory('É necessário informar a categoria.')
+        } else {
+            const dataForm = {
+                idcategory: category,
+                name: data.description,
+                type: isTypeBalanceEnabled ? 'Saida': 'Entrada',
+                price: data.price,
+                datebalance: data.datebalance,
+                file: file
+            }
+            console.log(dataForm)
+            //reset()
+        }
     }
 
     return (
-
         <BackgroundImage source={require('@assets/background.png')}>
             <Header />
             
             <ScrollView>
             <Form>
-                <Controller
-                    control={control}
-                    rules={{
-                    required: true,
+                <SelectDefault
+                    data={categories}
+                    onSelect={(selectedItem, index) => {
+                        setCategory(index + 1)
                     }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                    <InputDefault
-                        placeholder="Categorias"
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                        return selectedItem
+                    }}
+                    rowTextForSelection={(item, index) => {
+                        return item
+                    }}
+                    defaultButtonText="Categoria"
+                    dropdownIconPosition='right'
+                    renderDropdownIcon={() => (
+                        <Feather name="chevron-down" size={24} color="black" />
                     )}
-                    name="category"
+                    buttonStyle={{
+                        width: 'auto',
+                        justifyContent: 'flex-start',
+                        alignContent: 'flex-start',
+                    }}
                 />
-                {errors.category && <Text>{errors.category.message}</Text>}
-                    
-                <BlockGroupButtons>
-                    <ButtonType>
-                        <IconTypeIncome />
-                        <ButtonTypeText>Entrada</ButtonTypeText>
-                    </ButtonType>
+                {messageCategory && <Text>{messageCategory}</Text>}
 
-                    <ButtonType>
-                    <IconTypeOutcome />
-                    <ButtonTypeText>Saída</ButtonTypeText>
-                    </ButtonType>
-                </BlockGroupButtons>
+                <GroupType>
+                    <TitleTypeBalance>Tipo:</TitleTypeBalance>
+                    <TypeBalance 
+                        trackColor={{false: '#767577', true: '#767577'}}
+                        thumbColor={isTypeBalanceEnabled ? '#0c9ff5' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleSwitch}
+                        value={isTypeBalanceEnabled}
+                    />
+                    <TexttypeBalance>{isTypeBalanceEnabled ? 'Saida': 'Entrada'}</TexttypeBalance>
+                </GroupType>
 
                 <Controller
                     control={control}
@@ -117,7 +141,7 @@ export default function Products() {
                     )}
                     name="description"
                 />
-                <Text>{errors.description && errors.description.message}</Text>
+                {errors.description && <Text>{errors.description.message}</Text>}
 
                 <Controller
                     control={control}
@@ -128,13 +152,14 @@ export default function Products() {
                     <InputDefault
                         placeholder="Preço"
                         onBlur={onBlur}
+                        keyboardType='decimal-pad'
                         onChangeText={onChange}
                         value={value.toString()}
                     />
                     )}
                     name="price"
                 />
-                <Text>{errors.price && errors.price.message}</Text>
+                {errors.price && <Text>{errors.price.message}</Text>}
 
                 <Controller
                     control={control}
@@ -142,16 +167,22 @@ export default function Products() {
                     maxLength: 100,
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
-                    <InputDefault
-                        placeholder="Data de lançamento"
+                    <InputMasked
+                        type='datetime'
+                        options={{
+                            maskType: 'BRL',
+                            format: 'dd/mm/aaaa',
+                        }}
+                        placeholder="dd/mm/aaaa"
                         onBlur={onBlur}
+                        keyboardType='numeric'
                         onChangeText={onChange}
                         value={value}
                     />
                     )}
                     name="datebalance"
                 />
-                <Text>{errors.description && errors.description.message}</Text>
+                {errors.description && <Text>{errors.description.message}</Text>}
 
                 <InputFileBlock>
                     <InputFile>
@@ -163,7 +194,9 @@ export default function Products() {
                     </InputFileImage>
                 </InputFileBlock>
 
-                <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+                <ButtonDefault onPress={handleSubmit(onSubmit)}>
+                    <TextButtonDefault>Salvar</TextButtonDefault>
+                </ButtonDefault>
                </Form>
                </ScrollView>
 

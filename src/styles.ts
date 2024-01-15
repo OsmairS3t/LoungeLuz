@@ -1,4 +1,6 @@
 import { CaretDoubleDown, CaretDoubleUp, Faders, FileArrowUp } from 'phosphor-react-native';
+import { TextInputMask } from 'react-native-masked-text';
+import SelectDropdown from 'react-native-select-dropdown';
 import styled from 'styled-components/native';
 
 //index.tsx
@@ -39,6 +41,7 @@ export const TextPriceCardBalance = styled.Text`
 `;
 
 export const CardList = styled.View`
+    flex: 1;
     background-color: #ffffff;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -106,7 +109,6 @@ export const ItemListContainerBottom = styled.View`
 
 //balances
 export const Form = styled.View`
-    height: 100%;
     padding-top: 10px;
     padding-right: 20px;
     padding-bottom: 10px;
@@ -114,7 +116,38 @@ export const Form = styled.View`
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     gap: 10px;
-    background-color: #ffffff;
+    background-color: #ffffff88;
+`;
+
+export const SelectDefault = styled(SelectDropdown)`
+    height: 60px;
+    padding: 16px;
+    background-color: #EDEDED;
+    border-width: 1px;
+    border-color: #737373;
+    border-radius: 10px;
+    font-size: 16px;
+`;
+
+export const GroupType = styled.View`
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+`;
+
+export const TitleTypeBalance = styled.Text`
+    font-weight: 600;
+    font-size: 18px;
+    margin-right: 20px;
+`;
+
+export const TexttypeBalance = styled.Text`
+    font-weight: 500;
+    font-size: 18px;
+`;
+
+export const TypeBalance = styled.Switch`
 `;
 
 export const InputDefault = styled.TextInput`
@@ -127,39 +160,19 @@ export const InputDefault = styled.TextInput`
     font-size: 16px;
 `;
 
-export const BlockGroupButtons = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-`;
-
-export const ButtonType = styled.Pressable`
-    width: 160px;
-    padding: 10px;
-    gap: 8px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: #ededed;
+export const InputMasked = styled(TextInputMask)`
+    height: 60px;
+    padding: 16px;
+    background-color: #EDEDED;
     border-width: 1px;
-    border-color: #858585;
+    border-color: #737373;
     border-radius: 10px;
+    font-size: 16px;
 `;
 
 export const ButtonTypeText = styled.Text`
     color: #858585;
     font-size: 16px;
-`;
-
-export const IconTypeIncome = styled(CaretDoubleUp).attrs(({ theme }) => ({
-    color: '#858585',
-}))`
-    width: 18px;
-`;
-
-export const IconTypeOutcome = styled(CaretDoubleDown).attrs(({ theme }) => ({
-    color: '#858585',
-}))`
-    width: 18px;
 `;
 
 export const InputFile = styled.View`
@@ -173,12 +186,12 @@ export const InputFile = styled.View`
 
 export const InputFileBlock = styled.View`
     flex-direction: row;
-    justify-content: space - between;
+    justify-content: space-between;
     padding-bottom: 10px;
 `;
 
 export const InputFileImage = styled.View`
-    border-width: 1px;
+    border-width: 0px;
     border-color: #EDEDED;
     width: 240px;
     height: 80px;
