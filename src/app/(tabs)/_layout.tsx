@@ -5,6 +5,8 @@ import { ThemeProvider } from 'styled-components'
 import { Image } from "expo-image";
 import { Barcode, ListChecks, House } from 'phosphor-react-native'
 import theme from "../../theme";
+import { ANDROID_CLIENT_ID, REALM_APP_ID } from '@env'
+import { AppProvider, UserProvider } from "@realm/react";
 
 SplashScreen.preventAutoHideAsync();
 

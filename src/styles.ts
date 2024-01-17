@@ -3,6 +3,56 @@ import { TextInputMask } from 'react-native-masked-text';
 import SelectDropdown from 'react-native-select-dropdown';
 import styled from 'styled-components/native';
 import { Image as Img } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+
+//login
+export const ContainerLogin = styled.View`
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const GroupTitleLogin = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff48;
+    width: 350px;
+    height: 100px;
+    border-radius: 10px;
+`;
+
+export const TitleLogin = styled.Text`
+    font-size: 28px;
+    font-weight: 700;
+`;
+
+export const ImageLogin = styled(Img)``;
+
+export const ButtonLogin = styled.Pressable`
+    width: 350px;
+    height: 70px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    gap: 16px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    background-color: #00277A;
+`;
+
+export const IconButtonLogin = styled(Feather)`
+    color: #ffffff;
+`;
+
+export const TextButtonLogin = styled.Text`
+    font-size: 20px;
+    color: #ffffff;
+`;
+
 
 //index.tsx
 export const Container = styled.View`
