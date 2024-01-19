@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native";
-import { router } from 'expo-router'
+import { router, Stack } from 'expo-router'
 
 import { ContainerLogin, BackgroundImage, ImageLogin, TitleLogin, GroupTitleLogin, ButtonLogin, IconButtonLogin, TextButtonLogin } from '../../styles'
 
