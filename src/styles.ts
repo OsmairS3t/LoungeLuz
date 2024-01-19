@@ -2,8 +2,8 @@ import { Camera, CaretDoubleDown, CaretDoubleUp, Faders, FileArrowUp, Image } fr
 import { TextInputMask } from 'react-native-masked-text';
 import SelectDropdown from 'react-native-select-dropdown';
 import styled from 'styled-components/native';
-import { Image as Img } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Image as Img, Dimensions } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 //login
 export const ContainerLogin = styled.View`
@@ -44,7 +44,7 @@ export const ButtonLogin = styled.Pressable`
     background-color: #00277A;
 `;
 
-export const IconButtonLogin = styled(Feather)`
+export const IconButtonLogin = styled(FontAwesome)`
     color: #ffffff;
 `;
 
@@ -64,7 +64,7 @@ export const Container = styled.View`
 export const BackgroundImage = styled.ImageBackground`
     flex: 1;
     width: 410px;
-    height: 840px;
+    height: auto;
 `;
 
 export const CardBalance = styled.View`
@@ -286,17 +286,17 @@ export const BtnImage = styled.Pressable`
     padding: 5px;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme }) => theme.COLORS.BG_SCREEN};
+    background-color: '#000000';
 `;
 
 export const IconCamera = styled(Camera).attrs(({theme})=>({
     size: 32,
-    color: '#FAFAFA'
+    color: '#000000'
 }))``;
 
 export const IconImage = styled(Image).attrs(({theme})=>({
     size: 32,
-    color: '#FAFAFA'
+    color: '#000000'
 }))``;
 
 

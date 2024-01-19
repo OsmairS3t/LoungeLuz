@@ -112,7 +112,7 @@ export default function Products() {
                 type: isTypeBalanceEnabled ? 'Saida': 'Entrada',
                 price: data.price,
                 datebalance: data.datebalance,
-                file: file
+                file: imgComprove
             }
             console.log(dataForm)
             //reset()

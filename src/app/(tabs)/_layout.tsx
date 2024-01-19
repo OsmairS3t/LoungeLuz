@@ -30,13 +30,14 @@ export default function TabRoutesLayout() {
         <ThemeProvider theme={theme}>
             <Tabs
                 screenOptions={{
+                    headerTintColor: 'white',
                     headerShown: false,
-                    tabBarActiveTintColor: '#fff',
+                    tabBarActiveTintColor: '#ffffff',
                     tabBarStyle: {
                         height: 130,
                         backgroundColor: '#ffffff',
                         borderWidth: 0,
-                        borderColor: '#fff',
+                        borderColor: '#ffffff',
                     },
                     tabBarBackground: () => (
                         <Image

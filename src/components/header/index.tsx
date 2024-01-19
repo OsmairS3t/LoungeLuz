@@ -11,6 +11,8 @@ import {
     TitleHeaderApp,
     IconSignOut
 } from './styles';
+import { Pressable } from 'react-native';
+import { router } from 'expo-router';
 
 export default function Header() {
 
@@ -24,7 +26,7 @@ export default function Header() {
                         <TextProfile>Olá, Osmair</TextProfile>
                     </GroupTextProfile>
                 </Profile>
-                <IconSignOut size={32} />
+                <Pressable onPress={() => router.push('/SignIn/')}><IconSignOut size={32} /></Pressable>
             </HeaderContainer>
 
             <HeaderApp>
