@@ -79,10 +79,10 @@ export default function Products() {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
-                aspect: [2, 4],
+                aspect: [3, 4],
                 quality: 1
             })
-            console.log(result)
+            // console.log(result)
             if (!result.canceled) {
                 setImgComprove(result.assets[0].uri)
             }
